@@ -1,0 +1,29 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE location_type IS RECORD (
+        location_id    locations.location_id%TYP,
+        street_address locations.street_address%TYPE,
+        postal_code    locations.postal_code%TYPE,
+        city           locations.city%TYPE
+    );
+
+    TYPE department_type IS RECORD (
+        department_id   departments.department_id%TYPE,
+        department_name departments.department_name%TYPE,
+        locations       location_type
+    );
+
+    dept_record department_type;
+    v_dept departments.department_id%TYPE := &s_dept;
+BEGIN
+    SELECT d.department_id, d.department_name, l.location_id, l.street_address, l.postal_code, l.city
+    INTO dept_record.department_id, dept_record.department_name, dept_record.locations.location_id, dept_record.locations.street_address, dept_record.locations.postal_code, dept_record.locations.city
+    FROM departments d
+    JOIN locations l ON d.location_id = l.location_id
+    WHERE d.department_id = v_dept;
+
+    DBMS_OUTPUT.PUT_LINE('Département : ' || dept_record.department_id || ' - ' || dept_record.department_name);
+    DBMS_OUTPUT.PUT_LINE('Location : ' || dept_record.locations.street_address || ' - ' || dept_record.locations.postal_code || ' - ' || dept_record.locations.city);
+END;
+/

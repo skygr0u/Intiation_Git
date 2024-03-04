@@ -1,0 +1,85 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE EmployeeRecord IS RECORD (
+        employee_id   employees.employee_id%TYPE,
+        first_name    employees.first_name%TYPE,
+        last_name     employees.last_name%TYPE
+    );
+
+    v_employee EmployeeRecord;
+BEGIN
+    FOR i IN 100..120 LOOP
+        IF MOD(i, 2) = 0 THEN
+            SELECT employee_id, first_name, last_name
+            INTO v_employee
+            FROM employees
+            WHERE employee_id = i;
+
+            DBMS_OUTPUT.PUT_LINE('Identifiant: ' || v_employee.employee_id || ', Prénom: ' || v_employee.first_name || ', Nom: ' || v_employee.last_name);
+        END IF;
+    END LOOP;
+END;
+/
+
+
+--- BOUCLE WHILE 
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE EmployeeRecord IS RECORD (
+        employee_id   employees.employee_id%TYPE,
+        first_name    employees.first_name%TYPE,
+        last_name     employees.last_name%TYPE
+    );
+
+    v_employee EmployeeRecord;
+    i INTEGER := 100;
+BEGIN
+    WHILE i <= 120 LOOP
+        IF MOD(i, 2) = 0 THEN
+            SELECT employee_id, first_name, last_name
+            INTO v_employee
+            FROM employees
+            WHERE employee_id = i;
+
+            DBMS_OUTPUT.PUT_LINE('Identifiant: ' || v_employee.employee_id || ', Prénom: ' || v_employee.first_name || ', Nom: ' || v_employee.last_name);
+        END IF;
+
+        i := i + 1;
+    END LOOP;
+END;
+/
+
+
+-- BOUCLE LOOP
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    TYPE EmployeeRecord IS RECORD (
+        employee_id   employees.employee_id%TYPE,
+        first_name    employees.first_name%TYPE,
+        last_name     employees.last_name%TYPE
+    );
+
+    v_employee EmployeeRecord;
+    i INTEGER := 100;
+BEGIN
+    LOOP
+        EXIT WHEN i > 120;
+
+        IF MOD(i, 2) = 0 THEN
+            SELECT employee_id, first_name, last_name
+            INTO v_employee
+            FROM employees
+            WHERE employee_id = i;
+
+            DBMS_OUTPUT.PUT_LINE('Identifiant: ' || v_employee.employee_id || ', Prénom: ' || v_employee.first_name || ', Nom: ' || v_employee.last_name);
+        END IF;
+
+        i := i + 1;
+    END LOOP;
+END;
+/
